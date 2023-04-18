@@ -369,7 +369,6 @@ class Window(QMainWindow):
             self.cardDraw(1, 1, 1, "You", 0, 95)
 
         self.var_money = round(self.var_money, 2) # Turns 'var_money' into an decimal if the player's win contains less than $1.
-        print(self.var_money)
         self.money.setText("Money: $%s"%(str(self.var_money)))
 
     # Function cardDraw() if the player or dealer draws a card.
@@ -567,6 +566,10 @@ for a in range(0, ans):
     for j in ("Hearts", "Diamonds", "Spades", "Clubs"):
         for i in ("2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"):
             cardDeck.append("%s of %s"%(i, j))
+
+    #
+    # END - Blackjack Functionality
+    #
 
 # Initializes the entire program.
 if __name__ == '__main__':
