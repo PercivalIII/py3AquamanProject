@@ -430,33 +430,33 @@ class Window(QMainWindow):
         # Every operation calculates the sum of every item (individual card value), stored in the array list 'cardValue[plyr]'.
         if OneOrTwo == 2:
             if sum(cardValue[plyr]) == (self.var_difficulty):
-                card="%s got a %s and a %s, which is a blackjack!"%(name, hand[0], hand[1])
+                card = "%s got a %s and a %s, which is a blackjack!"%(name, hand[0], hand[1])
                 win = 1
                 self.check()
             else:
-                card="%s got a %s and a %s which is a total of %s."%(name, hand[0], hand[1], sum(cardValue[plyr]))
+                card = "%s got a %s and a %s which is a total of %s."%(name, hand[0], hand[1], sum(cardValue[plyr]))
             self.player.setText(card)
             self.player.setStyleSheet(("background-color: white;"))
         
         elif OneOrTwo == 1:
             if len(cardValue[plyr]) >= 5 and sum(cardValue[plyr]) <= (self.var_difficulty) and plyr == 1: # If the player's card deck contains 5 cards, while the player's card deck sum value is higher than the dealer's card deck.
-                card="%s got a %s, which is a five card Charlie!"%(name, hand[0])
+                card = "%s got a %s, which is a five card Charlie!"%(name, hand[0])
                 charlie = 1
                 self.check()
             elif sum(cardValue[plyr]) == (self.var_difficulty):
-                card="%s got a %s, which is a total of %s."%(name, hand[0], sum(cardValue[plyr])) # If the player's card deck sum value is equivalent to 'var_difficulty' value.
+                card = "%s got a %s, which is a total of %s."%(name, hand[0], sum(cardValue[plyr])) # If the player's card deck sum value is equivalent to 'var_difficulty' value.
                 self.resize()
                 if plyr != 0:
                     self.stand()
             elif sum(cardValue[plyr]) >= (self.var_difficulty + 1): # If the player's card deck sum value is less than or equal to 'var_difficulty + 1' value.
-                card="%s got a %s, which is %s and got busted."%(name, hand[0], sum(cardValue[plyr]))
+                card = "%s got a %s, which is %s and got busted."%(name, hand[0], sum(cardValue[plyr]))
                 self.resize()
                 if plyr == 1:
                     self.check()
                 self.play_test = 2
                 self.enableBet()
             else:
-                card="%s got a %s, which is a total of %s."%(name, hand[0], sum(cardValue[plyr]))
+                card = "%s got a %s, which is a total of %s."%(name, hand[0], sum(cardValue[plyr]))
             
             if plyr == 0: # Updates the dealer's card deck text box if plyr == 0.
                 self.dealer.setText(card)
@@ -541,7 +541,7 @@ class Window(QMainWindow):
         self.win.setText("") 
         self.dealer.setText("")
         self.player.setText("")
-        self.empty() # 
+        self.empty()
         self.dealer.setStyleSheet(("background-color: transparent;"))
         self.player.setStyleSheet(("background-color: transparent;"))
         self.win.setStyleSheet(("background-color: transparent;"))
@@ -584,9 +584,9 @@ class Window(QMainWindow):
                 break
 
 # Global variables primarily used by the "Blackjack Functionality" section.
-drawnCards=[[], []]
-cardValue=[[], []]
-cardDeck=[]
+drawnCards = [[], []]
+cardValue = [[], []]
+cardDeck = []
 ans = 6 # The total decks you want to play with.
 shuffle(cardDeck) # Shuffles the 'cardDeck' array list.
 win = 0
