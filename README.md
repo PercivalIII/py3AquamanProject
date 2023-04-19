@@ -9,3 +9,6 @@ Features List:
 - Calculate values of cards based on hand dealt to the player.
 - Calculate money of player across games.
 - Determine winner based on scores of both player and dealer.
+
+Project Demonstration:
+https://youtu.be/GOKAcUrSFmI
