@@ -34,14 +34,15 @@ class Window(QMainWindow):
         editMenu.addAction(optionA)
         editMenu.addAction(optionB)
 
-        sshFile="style.css"
+        sshFile = "style.css"
         with open(sshFile,"r") as fh:
             self.setStyleSheet(fh.read())
 
         self.home() # Calls the function home() to load the main 
     
     #
-    # START - Main Program Graphical User Interface (GUI)
+    # START 
+    # A.) Main Program Graphical User Interface (GUI)
     #
 
     def home(self):
@@ -68,8 +69,8 @@ class Window(QMainWindow):
         self.pic = []
         self.drawn = 0
         self.picIndex = 0
-        self.indent=[150, 150]
-        self.play_test = 1 # If it's 1 -> The game starts, if it's 2 -> the UI application resets to a clear deck, then starts the game. For conditional statements.
+        self.indent = [150, 150]
+        self.play_test = 1 # If it's 1 -> The game starts, if it's 2 -> the UI application restarts the blackjack deck, then starts the game. Used for conditional statements.
         self.oneOrTwoCards = 0
         self.totalGamesCount = 0 # The player's overall game count, every game increments to 1.
         self.var_money = 100 # The player's money.
@@ -179,11 +180,13 @@ class Window(QMainWindow):
         self.window.show() # Calls the function show() to initialize and display  the settings window.
 
     #
-    # END - Main Program Graphical User Interface (GUI)
+    # END
+    # A.) Main Program Graphical User Interface (GUI)
     #
 
     #
-    # START - Settings Graphical User Interface (GUI)
+    # START
+    # B.) Settings Graphical User Interface (GUI)
     #
 
     # Function settingsUI() to initialize Settings window.
@@ -196,7 +199,7 @@ class Window(QMainWindow):
 
         # Initializes the Qt5 formatting of the Settings window.
         settingsUI.setObjectName("settingsUI")
-        settingsUI.resize(400, 300)
+        settingsUI.resize(400, 200)
         settingsUI.setFixedSize(settingsUI.width(), settingsUI.height())
         settingsUI.setWindowFlag(QtCore.Qt.WindowMaximizeButtonHint, False)
 
@@ -223,40 +226,46 @@ class Window(QMainWindow):
         
         # Elements for buttons in the Settings UI.
         self.applyButton = QPushButton(settingsUI)
-        self.applyButton.setGeometry(200, 260, 75, 23)
+        self.applyButton.setGeometry(200, 160, 75, 23)
         self.applyButton.setObjectName("applyButton")
         self.applyButton.clicked.connect(lambda: self.settingsUpdate())
 
         self.exitButton = QPushButton(settingsUI)
-        self.exitButton.setGeometry(290, 260, 75, 23)
+        self.exitButton.setGeometry(290, 160, 75, 23)
         self.exitButton.setObjectName("exitButton")
         self.exitButton.clicked.connect(settingsUI.close)
 
         self.difficultyStandard = QPushButton(settingsUI)
-        self.difficultyStandard.setGeometry(30, 80, 75, 23)
+        self.difficultyStandard.setGeometry(30, 80, 120, 23)
         self.difficultyStandard.setObjectName("difficultyStandard")
         self.difficultyStandard.clicked.connect(lambda: self.difficultyChange(21)) # Standard Difficulty [21] button
 
         self.difficultyEasy = QPushButton(settingsUI)
-        self.difficultyEasy.setGeometry(30, 110, 75, 23)
+        self.difficultyEasy.setGeometry(30, 110, 120, 23)
         self.difficultyEasy.setObjectName("difficultyEasy")
         self.difficultyEasy.clicked.connect(lambda: self.difficultyChange(30)) # Easy Difficulty [30] button
 
-        self.difficultyHard = QPushButton(settingsUI)
-        self.difficultyHard.setGeometry(30, 140, 75, 23)
-        self.difficultyHard.setObjectName("difficultyHard")
-        self.difficultyHard.clicked.connect(lambda: self.difficultyChange(16)) # Hard Difficulty [16] button
+        self.difficultyIntermediate = QPushButton(settingsUI)
+        self.difficultyIntermediate.setGeometry(30, 140, 120, 23)
+        self.difficultyIntermediate.setObjectName("difficultyIntermediate")
+        self.difficultyIntermediate.clicked.connect(lambda: self.difficultyChange(16)) # Intermediate Difficulty [16] button
 
+        self.difficultyHard = QPushButton(settingsUI)
+        self.difficultyHard.setGeometry(30, 170, 120, 23)
+        self.difficultyHard.setObjectName("difficultyHard")
+        self.difficultyHard.clicked.connect(lambda: self.difficultyChange(12)) # Hard Difficulty [12] button
+
+        # Elements for the status of the game values in the Settings UI.
         self.currentStatusLabel = QLabel(settingsUI)
-        self.currentStatusLabel.setGeometry(20, 200, 111, 16)
+        self.currentStatusLabel.setGeometry(210, 80, 111, 16)
         self.currentStatusLabel.setObjectName("currentStatusLabel")
 
         self.playerMoneyStatus = QLabel(settingsUI)
-        self.playerMoneyStatus.setGeometry(30, 220, 180, 16)
+        self.playerMoneyStatus.setGeometry(220, 100, 180, 16)
         self.playerMoneyStatus.setObjectName("playerMoneyStatus")
 
         self.blackjackDifficultyStatus = QLabel(settingsUI)
-        self.blackjackDifficultyStatus.setGeometry(30, 240, 121, 16)
+        self.blackjackDifficultyStatus.setGeometry(220, 115, 121, 16)
         self.blackjackDifficultyStatus.setObjectName("blackjackDifficultyStatus")
 
         self.retranslateUi(settingsUI) # Calls the function retranslateUi(settingsUI) to initialize the settings text elements.
@@ -271,17 +280,17 @@ class Window(QMainWindow):
 
     # Function difficultyChange(value) to adjust the difficulty of the blackjack game by changing the '21' rule.
     def difficultyChange(self, value):
-        self.difficultyValue = value
+        self.difficultyValueChange = value
         self.changeDifficultyLine.setText("%d"%(value))
-        self.blackjackDifficultyStatus.setText("Blackjack difficulty = %d"%(value))
 
     # Function settingsUpdate() to apply every change made by the user to the blackjack game such as their money value and the game difficulty.
     def settingsUpdate(self):
-        self.var_difficulty = self.difficultyValue
+        self.var_difficulty = self.difficultyValueChange
         self.var_money = int(self.changePlayerMoneyLine.text())
         self.money.setText("Money: $%s"%(str(self.var_money)))
         self.changePlayerMoneyLine.setText("%d"%(self.moneyValue))
         self.playerMoneyStatus.setText("Player Money = $%d"%(self.var_money))
+        self.blackjackDifficultyStatus.setText("Blackjack difficulty = %d"%(self.var_difficulty))
 
         # Intiializes the PyQt5 pop-up messagebox to remind the user that the game's settings has been changed/updated.
         self.confirmUser = QMessageBox()
@@ -300,17 +309,20 @@ class Window(QMainWindow):
         self.exitButton.setText(_translate("settingsUI", "Exit"))
         self.difficultyStandard.setText(_translate("settingsUI", "Standard [21]"))
         self.difficultyEasy.setText(_translate("settingsUI", "Easy [30]"))
-        self.difficultyHard.setText(_translate("settingsUI", "Hard [16]"))
+        self.difficultyIntermediate.setText(_translate("settingsUI", "Intermediate [16]"))
+        self.difficultyHard.setText(_translate("settingsUI", "Hard [12]"))
         self.currentStatusLabel.setText(_translate("settingsUI", "Current status:"))
         self.playerMoneyStatus.setText(_translate("settingsUI", "Player Money = $"))
         self.blackjackDifficultyStatus.setText(_translate("settingsUI", "Blackjack difficulty = 21"))
 
     #
-    # END - Main Program Graphical User Interface (GUI)
+    # END
+    # B.) Settings Graphical User Interface (GUI)
     #
 
     #
-    # START - Blackjack Functionality
+    # START
+    # C.) Blackjack Functionality
     #
 
     # Function play() to start the game depending on the 'play_test' value.
@@ -414,19 +426,21 @@ class Window(QMainWindow):
                 # e.g If 'hand[1]' contains '6 of Diamonds', 'cardValue[plyr]' will only append the integer '6' only.
 
         self.testForAces(plyr)
+
         # Every operation calculates the sum of every item (individual card value), stored in the array list 'cardValue[plyr]'.
         if OneOrTwo == 2:
             if sum(cardValue[plyr]) == (self.var_difficulty):
-                card="%s got a %s and a %s, \nwhich is a blackjack."%(name, hand[0], hand[1])
+                card="%s got a %s and a %s, which is a blackjack!"%(name, hand[0], hand[1])
                 win = 1
                 self.check()
             else:
                 card="%s got a %s and a %s which is a total of %s."%(name, hand[0], hand[1], sum(cardValue[plyr]))
             self.player.setText(card)
             self.player.setStyleSheet(("background-color: white;"))
+        
         elif OneOrTwo == 1:
             if len(cardValue[plyr]) >= 5 and sum(cardValue[plyr]) <= (self.var_difficulty) and plyr == 1: # If the player's card deck contains 5 cards, while the player's card deck sum value is higher than the dealer's card deck.
-                card="%s got a %s, which is a five card Charlie."%(name, hand[0])
+                card="%s got a %s, which is a five card Charlie!"%(name, hand[0])
                 charlie = 1
                 self.check()
             elif sum(cardValue[plyr]) == (self.var_difficulty):
@@ -450,6 +464,8 @@ class Window(QMainWindow):
             else: # Updates the player's card deck text box if plyr != 0, assuming plyr == 1.
                 self.player.setText(card)
                 self.player.setStyleSheet(("background-color: white;"))
+        
+        self.initCheck()
     
     # Function testForAces() to check for 'Ace' cards in the player / dealer drawn card.F
     def testForAces(self, plyr):
@@ -489,6 +505,20 @@ class Window(QMainWindow):
             self.money.setText("Money: $%s"%(str(self.var_money)))
             self.win.setText("You Win!")
 
+        self.updateCheck()
+
+    # Function initCheck() works at the very beginnning of the game. This is used for blackjack games when the difficulty value is lower than 21.
+    def initCheck(self):
+        self.var_money = round(self.var_money, 2) # Turns 'var_money' into an decimal in case the player's win contains less than $1.
+        if (sum(cardValue[1]) >= (self.var_difficulty + 1)):
+            self.var_money -= self.var_bet
+            self.money.setText("Money: $%s"%(str(self.var_money)))
+            self.win.setText("Dealer Win!")
+            self.updateCheck()
+
+    # Function updateCheck() is done after check() has been executed or when the game has decided who wins the game. Function resets some variables and shuffles the card deck. 
+    def updateCheck(self):
+        global win, cardValue, drawnCards, charlie # Function to access the global variable data 'win', 'drawnCards', 'cardValue', and 'charlie'. 
         self.win.setStyleSheet(("background-color: white;"))
         shuffle(cardDeck) # Shuffles the 'cardDeck' array list.
         drawnCards, cardValue, self.oneOrTwoCards, win, self.drawn = [[], []], [[], []], -1, 0, 0 # Resets back values and conditions of the blackjack game back from the start.
@@ -497,6 +527,7 @@ class Window(QMainWindow):
         self.enableBet() # Enable access to the 'btnB[]' buttons.
         self.totalGamesCount += 1 # Integer variable 'totalGamesCount' increments to  1.
         self.gameCount.setText("Total Games: %s"%(str(self.totalGamesCount)))  # Updates the 'gameCount' text element.
+
 
     # Function enableBet() to enables betting options by enabling the 'btnB' variable buttons functionality.
     def enableBet(self):
@@ -520,6 +551,7 @@ class Window(QMainWindow):
     def reset(self):
         self.resize()
         self.play_test = 1
+        self.oneOrTwoCards = 0
         self.win.setText("")
         self.dealer.setText("")
         self.player.setText("")
@@ -568,7 +600,8 @@ for a in range(0, ans):
             cardDeck.append("%s of %s"%(i, j))
 
     #
-    # END - Blackjack Functionality
+    # END
+    # C.) Blackjack Functionality
     #
 
 # Initializes the entire program.
