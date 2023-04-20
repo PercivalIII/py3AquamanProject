@@ -147,7 +147,7 @@ class Window(QMainWindow):
 
         # Element for total play amount indicator.
         self.gameCount.move(6, 870)
-        self.gameCount.resize(120, 20)
+        self.gameCount.resize(10, 20)
         self.gameCount.setFont(fontB)
 
         # Element for Player card deck text element.
@@ -196,6 +196,7 @@ class Window(QMainWindow):
         # The integer variables here are used to check the changes made before processing it to the real blackjack game decided by the user.
         self.difficultyValue = self.var_difficulty
         self.moneyValue = self.var_money
+        self.difficultyValueChange = 21
 
         # Initializes the Qt5 formatting of the Settings window.
         settingsUI.setObjectName("settingsUI")
