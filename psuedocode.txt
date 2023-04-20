@@ -1,0 +1,266 @@
+from random import shuffle
+
+Declare Integer drawnCards = [[], []]
+Declare Integer cardValue = [[], []]
+Declare String cardDeck = []
+Declare Integer ans = 6
+shuffle(cardDeck)
+Declare Integer win = 0
+Declare Integer charlie = 0
+
+Declare Integer pic
+Declare Integer drawn
+Declare Integer picIndex
+Declare Integer indent
+Declare Integer play_test
+Declare Integer oneOrTwoCards
+Delcare Integer var_money
+Declare Integer var_difficulty
+
+Declare Integer a
+Declare String j, c
+
+for a = 0 to ans
+    for j = "Hearts" to "Diamonds" to "Spades" to "Clubs"
+        for c = "1" to "2" to "3" to "4" to "5" to "6" to "7" to "8" to "9" to "10" to "Jack" to "Queen" to "King" to "Ace"
+            cardDeck.append(c " of " j)
+        End for
+    End for 
+End for
+
+Module main()
+    pic = []
+    drawn = 0
+    picIndex = 0
+    indent = [150, 150]
+    play_test = 1
+    oneOrTwoCards = 0
+    var_money = 100
+    var_difficulty = 21
+    Call play()
+End module
+
+Module play()
+    If play_test == 1:
+        Call hitMe()
+    Else if play_test == 2:
+        Call restart()
+    End if
+End module
+
+Module empty()
+    Declare Integer i
+    For i = 0 to len(pic)
+        pic[i].resize = (0,0)
+        indent[0] = 150
+        indent[1] = 150
+        picIndex = 0
+        pic = []
+        cardValue = [[], []]
+        drawnCards = [[], []]
+        win = 0
+        charlie = 0
+    End for
+End module
+
+Module resize()
+    Declare Integer i
+    btnA[1].setEnabled = (False)
+    For i = 0 to len(btnB)
+        btnB[i].setEnabled = (False)
+    End for
+End module
+
+Module bet(Integer n, Integer index)
+    Declare Integer var_bet = n
+    Declare Integer i
+    For i = 0 to 5
+        btnB[i].setStyleSheet("background-color:none;")
+    End for
+    btnB[index].setStyleSheet("background-color:black;color:white;")
+    If var_bet > var_money:
+        var_bet = var_money
+    End if
+    If var_bet < 0:
+        var_bet = var_bet
+    End if
+Module end
+
+Module hitMe()
+    Declare String invalidBet
+    Declare Integer i
+    If var_money <= 0:
+        invalidBet.QMessageBox()
+        invalidBet.setWindowTitle("Invalid")
+        invalidBet.setText("You have insufficient funds to bet at all!\n You can change your money value in Settings > Change Value.")
+        invalidBet.setIcon(QMessageBox.Warning)
+        invalidBet.exec_()
+        return
+    End if
+    For i = 0 to len(btnB)
+        btnB[i].setEnabled = (False)
+    End for
+    If oneOrTwoCards < 0:
+        oneOrTwoCards = 0
+    End if
+    If oneOrTwoCards == 0:
+        btnA[1].setEnabled = (True)
+        Call cardDraw(2, 2, 1, "You", 0, 95)
+        Call cardDraw(1, 1, 0, "Dealer", 1, 490)
+        oneOrTwoCards++
+    Else if oneOrTwoCards > 0:
+        cardDraw(1, 1, 1, "You", 0, 95)
+    End uf
+    var_money = round(var_money, 2)
+    money.setText = ("Money: $%s"%(str(var_money)))
+End module
+
+Module cardDraw(Integer handLength, Integer OneOrTwo, Integer plyr, String name, Integer indentIndex, Integer line)
+    Declare Integer hand = []
+    Declare Integer = i
+    For i = 0 to handLength
+        hand.append(cardDeck[drawn])
+        drawnCards[plyr].append(cardDeck[drawn])
+        pic.append(QLabel())
+        pic[picIndex].setPixmap = (QPixmap("img/%s.svg"%(cardDeck[drawn])))
+        pic[picIndex].setGeometry = (indent[indentIndex], line, 238, 322)
+        indent[indentIndex] = indent[indentIndex] + 50
+        pic[picIndex].show()
+        picIndex++
+        drawn++
+    End for
+    For i = 0 to OneOrTwo
+        If "Ace" = hand[i]:
+            cardValue[plyr].append(11)
+        Else if hand[i][:1] = "Q" or hand[i][:1] = "J" or hand[i][:1] = "K":
+            cardValue[plyr].append(10)
+        Else:
+            cardValue[plyr].append(int(hand[i][0:2]))
+        End If
+    End for
+    Call testForAces(plyr)
+    If OneOrTwo == 2
+        If sum(cardValue[plyr]) == (var_difficulty):
+            card = name "got a" hand[0] "and a " hand[1] ", which is a blackjack!"
+            win = 1
+            Call check()
+        Else:
+            card = name "got a" hand[0] "and a " hand[1] ", which is a total of " sum(cardValue[plyr])) "."
+        End if 
+        player.setText = (card)
+        player.setStyleSheet = (("background-color: white;"))
+    Else if OneOrTwo == 1
+        If len(cardValue[plyr]) >= 5 and sum(cardValue[plyr]) <= (var_difficulty) and plyr == 1:
+            card = name " got a " hand[0] ", which is a five card Charlie!"
+            charlie = 1
+            Call check()
+        Else if sum(cardValue[plyr]) == (var_difficulty):
+            card = name " got a " hand[0] ", which is a total of" sum(cardValue[plyr]) "."
+            Call resize()
+            If plyr != 0:
+                Call stand()
+            End if
+        Else if sum(cardValue[plyr]) >= (var_difficulty + 1):
+            card = name " got a " hand[0] ", which is" sum(cardValue[plyr]) " and got busted."
+            Call resize()
+            If plyr == 1:
+                call check()
+            End if
+            play_test = 2
+            Call enableBet()
+        Else:
+            card = name " got a " hand[0] ", which is a total of" sum(cardValue[plyr]) "."
+        End if
+
+        If plyr == 0:
+            dealer.setText(card)
+            dealer.setStyleSheet(("background-color: white;"))
+        Else:
+            player.setText(card)
+            player.setStyleSheet(("background-color: white;"))
+        End if
+        Call initCheck()
+End module
+
+Module initCheck()
+    var_money = round(var_money, 2)
+    If (sum(cardValue[1])) >= (var_difficulty + 1):
+        var_money = var_money - var_bet
+        money.setText("Money: $"str(var_money))
+        win.setText("Dealer Win!")
+        Call updateCheck()
+    End if
+End module
+
+Module updateCheck()
+    win.setStyleSheet(("background-color: white;"))
+    shuffle(cardDeck)
+    drawnCards = [[], []]
+    cardValue = [[], []]
+    oneOrTwoCards = -1
+    win = 0
+    drawn = 0
+    Call resize()
+    play_test = 2
+    Call enableBet()
+    totalGameCount++
+    gameCount.setText("Total Games: " str(setTotalGamesCount))
+End module
+
+Module enableBet()
+    Declare Integer i
+    For i = 0 to len(btnB)
+        btnB[i].setEnable(True)
+    End for
+End module
+
+Module restart()
+    Call resize()
+    play_test = 1
+    win.setText("")
+    dealer.setText("")
+    player.setText("")
+    Call empty()
+    dealer.setStyleSheet(("background-color: transparent;"))
+    player.setStyleSheet(("background-color: transparent;"))
+    win.setStyleSheet(("background-color: transparent;"))
+    Call hitMe()
+End module
+
+Module reset()
+    Call resize()
+    play_test = 1
+    oneOrTwoCards = 0
+    win.setText("")
+    dealer.setText("")
+    player.setText("")
+    dealer.setStyleSheet(("background-color: transparent;"))
+    player.setStyleSheet(("background-color: transparent;"))
+    win.setStyleSheet(("background-color: transparent;"))
+    Call empty()
+    var_money = 100
+    money.setText("Money: $" str(var_money))
+    totalGamesCount = 0
+    gameCount.setText("Total Games: " str(self.totalGamesCount))
+    Call enableBet()
+End module
+
+Module stand()
+    btnA[0].setEnabled(False)
+    Call resize()
+    speed = 100
+    While True
+        If sum(cardValue[0]) <= 16 and sum(cardValue[1]) != 0 and sum(cardValue[1]) <= (var_difficulty + 1):
+            QTest.qWait(speed) 
+            Call cardDraw(1, 1, 0, "Dealer",1 , 490)
+            speed = speed + 200
+        Else:
+            Call resize()
+            play_test = 2
+            Call enableBet()
+            Call check()
+            btnA[0].setEnabled(True)
+            break
+        End if
+    End while
+End module 
