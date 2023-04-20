@@ -360,6 +360,16 @@ class Window(QMainWindow):
     
     # Function hitMe() for the player to hit a card.
     def hitMe(self):
+        # When the player has less than $0 money, this message is triggered and terminates the function.
+        if self.var_money <= 0:
+            self.invalidBet = QMessageBox()
+            self.invalidBet.setWindowTitle("Invalid")
+            self.invalidBet.setText("You have insufficient funds to bet at all!\n You can change your money value in Settings > Change Value.")
+            self.invalidBet.setIcon(QMessageBox.Warning)
+            self.invalidBet.exec_() # Calls function exec_() to display the messagebox.
+            self.enableBet()
+            return
+            
         # When the player starts to hit the dealer, all betting options will be inaccessible until the game ends.
         for i in range(0, len(self.btnB)):
             self.btnB[i].setEnabled(False)
