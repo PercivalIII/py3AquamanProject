@@ -147,7 +147,7 @@ class Window(QMainWindow):
 
         # Element for total play amount indicator.
         self.gameCount.move(6, 870)
-        self.gameCount.resize(10, 20)
+        self.gameCount.resize(120, 20)
         self.gameCount.setFont(fontB)
 
         # Element for Player card deck text element.
