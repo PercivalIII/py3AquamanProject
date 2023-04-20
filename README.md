@@ -11,4 +11,4 @@ Features List:
 - Determine winner based on scores of both player and dealer.
 
 Project Demonstration:
-https://youtu.be/GOKAcUrSFmI
+https://youtu.be/Go7tkU6Ze2U
